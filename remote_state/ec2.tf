@@ -1,19 +1,16 @@
 resource "aws_instance" "terraform" {
-    #for_each = var.instances
-    for_each = toset(var.instances)
     ami = "ami-09c813fb71547fc4f"
     instance_type = "t3.micro"
     vpc_security_group_ids = [aws_security_group.allow_all.id]
 
     tags = {
-        #Name = each.key
-        Name = each.value
+        Name = "terraform"
         Terraform = "true"
     }
 }
 
 resource "aws_security_group" "allow_all" {
-  name   = "allow_all_again"
+  name   = "allow_all"
 
   egress {
     from_port        = 0
@@ -31,7 +28,7 @@ resource "aws_security_group" "allow_all" {
   }
 
   tags = {
-    Name = "allow_all"
+    Name = "allow_all_tf"
   }
 
 }
